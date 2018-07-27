@@ -2,13 +2,14 @@
 A Python web crawler that parse movie info from `JavBus` and store it in a [SQLite 3](https://www.sqlite.org/index.html) database
 
 ## Dependencies
+> Python 3 is required
 before parsing, install all dependencies
 ```bash
 $ pip3 i -r requirements.txt
 ```
 
 ## How to Use
-> If you are using windows, the command lines should be different
+> If you are using windows, the command lines will be different
 * Go to crawler folder on terminal
 ```bash
 $ cd .../crawler_javbus
