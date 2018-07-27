@@ -100,18 +100,8 @@ def main_update(start_page_url, counter):
             try:
                 # parse the given page
                 next_page = update(next_page, counter)
-            except requests.exceptions.ConnectionError as e:
-                print('-------------------------------- Connection Error: ' + next_page)
-                log_fail_movie(next_page, e)
-                next_page = crawler.skip_page(next_page)
-                continue
-            except requests.exceptions.HTTPError as e:
-                print('-------------------------------- HTTP Error: ' + next_page)
-                log_fail_movie(next_page, e)
-                next_page = crawler.skip_page(next_page)
-                continue
-            except UnboundLocalError as e:
-                print('-------------------------------- Unbound Local Error : ' + next_page)
+            except Exception as e:
+                print('-------------------------------- {} : {}'.format(e, next_page))
                 log_fail_movie(next_page, e)
                 next_page = crawler.skip_page(next_page)
                 continue
@@ -122,8 +112,7 @@ def log_fail_movie(failed_url, error):
         f.write('{} \n {}\n'.format(failed_url, error))
 
 
-if __name__ == '__main__':
-
+def main():
     # start the timer
     start_time = timeit.default_timer()
 
@@ -132,8 +121,11 @@ if __name__ == '__main__':
 
     count = Counter()
 
-    # start main parsing
-    main_update(entry_url, count)
+    try:
+        # start main parsing
+        main_update(entry_url, count)
+    except KeyboardInterrupt:
+        print('Stop by user')
 
     # calculate run time
     stop_time = timeit.default_timer()
@@ -152,3 +144,7 @@ if __name__ == '__main__':
     print('已扒取 %s 部电影' % count.parsing_time)
 
     print('Complete Parsing')
+
+
+if __name__ == '__main__':
+    main()

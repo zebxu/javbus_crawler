@@ -93,15 +93,17 @@ def main(start_page_url, end_page_num, thread_num, counter):
         try:
             # parse the given page
             next_page = parse_page(next_page, thread_num, counter)
-        except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError, UnboundLocalError,
-                requests.ReadTimeout, TimeoutError, urllib3.exceptions.NewConnectionError,
-                requests.exceptions.ChunkedEncodingError) as e:
+        except Exception as e:
             print('Thread {} facing exception:'.format(thread_num))
             print('************************************* {}: '.format(e) + next_page)
             log_fail_movie(next_page, e, thread_num)
             next_page = skip_page(next_page)
             print('Thread {} skip page'.format(thread_num))
             continue
+        except KeyboardInterrupt:
+            print('Exit by user')
+            return
+
     # log thread complete time
     with open('failed_movies.txt', 'a') as f:
         f.write('Thread {} complete at {}\n'.format(thread_num, str(datetime.datetime.now().time())))
@@ -128,23 +130,33 @@ def log_fail_movie(failed_url, error, thread):
         f.write('\nThread {}: {}\n  {}\n'.format(thread, failed_url, error))
 
 
-if __name__ == '__main__':
-
+def multi_threads_main():
     # initialize the counter object
     count = Counter()
 
     # start the timer
     start_time = timeit.default_timer()
 
-    # first page number
-    first_page = int(sys.argv[1])
+    try:
+        # first page number
+        first_page = int(sys.argv[1])
 
-    # max page number 1325
-    max_page = int(sys.argv[2])
+        # max page number 1325
+        max_page = int(sys.argv[2])
 
-    with open('failed_movies.txt', 'a') as f:
-        f.write('Parse from page {} to page {}\n'.format(sys.argv[1], sys.argv[2]))
-        f.write('Start time:' + str(datetime.datetime.now()) + '\n')
+        # log start status
+        with open('failed_movies.txt', 'a') as f:
+            f.write('Parse from page {} to page {}\n'.format(sys.argv[1], sys.argv[2]))
+            f.write('Start time:' + str(datetime.datetime.now()) + '\n')
+
+    except IndexError:
+        print('No arguments to indicate what pages to parse, use default params')
+        first_page = 1
+        max_page = 10
+
+        with open('failed_movies.txt', 'a') as f:
+            f.write('Parse from page 1 to page 2\n')
+            f.write('Start time:' + str(datetime.datetime.now()) + '\n')
 
     # calculate page assignment for each thread
     # entry must contains /hd/page
@@ -183,7 +195,7 @@ if __name__ == '__main__':
     third_thread.join()
     fourth_thread.join()
 
-    # log end time
+    # log end status
     with open('failed_movies.txt', 'a') as f:
         f.write('End Time: ' + str(datetime.datetime.now()) + '\n')
         f.write('Time Spent：' + str(time_spent / 60) + ' mins\n\n\n\n\n')
@@ -195,3 +207,7 @@ if __name__ == '__main__':
     print(str(count.parsing_time) + ' new movies were parsed')
 
     print('Parsing Complete')
+
+
+if __name__ == '__main__':
+    multi_threads_main()
