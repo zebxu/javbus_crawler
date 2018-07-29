@@ -32,8 +32,7 @@ $ python3 parser.py 1 999
  * The code above parse from page 1 to page 999
  * 所示指令会爬取第1到第999页
  
-> Note: If you are using windows, the command lines will be different
-> Note: windows的指令会有所不同
+> Note: If you are using windows, the command lines will be different  提示： windows的指令会有所不同
 
 ## Update | 更新数据库
 * Run command below and parse the latest movies
