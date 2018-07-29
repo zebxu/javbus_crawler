@@ -48,3 +48,6 @@ $ python3 update.py
 ## Problem
 * If the website is down, try changing the entry url in the code
 * 如果javbus的网址挂了，可以尝试更改代码中的entry url
+
+## Some Pull Request Idea
+- [ ] Make a configuration file to isolate entry url
