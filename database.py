@@ -1,6 +1,6 @@
 import sqlite3
-from movie import Movie
-from movie import Link
+from object_prototye import Movie
+from object_prototye import Link
 import os
 
 

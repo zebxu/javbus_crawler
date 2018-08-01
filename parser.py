@@ -2,7 +2,7 @@
 
 import bs4
 import requests
-from movie import Movie, Link
+from object_prototye import Movie, Link
 import crawler
 import os
 

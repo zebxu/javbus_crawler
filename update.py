@@ -8,7 +8,7 @@ import database
 import timeit
 import requests
 import os
-from movie import Counter
+from object_prototye import Counter
 import datetime
 
 

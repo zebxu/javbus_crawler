@@ -7,11 +7,9 @@ import database
 import os
 import timeit
 import threading
-import requests
-import urllib3
 import sys
 import datetime
-from movie import Counter
+from object_prototye import Counter
 
 
 def parse_page(url, thread_num, counter):
