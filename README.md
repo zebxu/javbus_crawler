@@ -41,10 +41,13 @@ $ python3 parser.py 1 999
 $ python3 update.py
 ```
 
-## Data
+## Data | 数据位置
 * All parsing result are stored in `movies.db`
 * 所以数据都会存在`movies.db`
 
-## Problem
+## Problem | 可能出现的问题
 * If the website is down, try changing the entry url in the code
 * 如果javbus的网址挂了，可以尝试更改代码中的entry url
+
+## Some Pull Request Idea | 可改进的地方
+- [ ] Make a configuration file to isolate entry url
